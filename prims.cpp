@@ -2,44 +2,54 @@
 using namespace std;
 
 // Function to find sum of weights of edges of the Minimum Spanning Tree.
-int MST(int V, vector<vector<int>> adj[])
+int MST(int V, vector<vector<int>> adj[], int start)
 {
-  priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+  priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
   vector<int> vis(V, 0);
 
-  pq.push({0, 0});
+  vector<pair<int, int>> edges;
+
+  pq.push({0, -1, start});
   int sum = 0;
   while (!pq.empty())
   {
     auto it = pq.top();
     pq.pop();
 
-    int node = it.second;
-    int wt = it.first;
+    int node_to = it[2];
+    int node_from = it[1];
+    int wt = it[0];
 
-    if (vis[node] == 1)
+    if (vis[node_to])
       continue;
 
-    vis[node] = 1;
+    vis[node_to] = 1;
     sum += wt;
 
-    for (auto it : adj[node])
-    {
-      int adjNode = it[0];
-      int edgeWt = it[1];
+    edges.push_back({node_from, node_to});
 
-      if (!vis[adjNode])
+    for (auto x : adj[node_to])
+    {
+      if (!vis[x[0]])
       {
-        pq.push({edgeWt, adjNode});
+        pq.push({x[1], node_to, x[0]});
       }
     }
+  }
+  for (auto x : edges)
+  {
+    if (x.first == -1)
+    {
+      continue;
+    }
+    cout << x.first << '-' << x.second << endl;
   }
   return sum;
 }
 
 int main()
 {
-  int V, E;
+  int V, E, start;
   cout << "Enter the number of vertices and edges of the graph:\n";
   cin >> V >> E;
   vector<vector<int>> adj[V];
@@ -52,8 +62,10 @@ int main()
     adj[u].push_back({v, w});
     adj[v].push_back({u, w});
   }
+  cout << "Enter the start node: ";
+  cin >> start;
 
-  cout << MST(V, adj) << "\n";
+  cout << MST(V, adj, start) << "\n";
 
   return 0;
 }
