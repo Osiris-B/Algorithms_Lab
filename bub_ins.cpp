@@ -53,13 +53,14 @@ int main()
   int n, choice;
   cout << "Enter the number of elements: ";
   cin >> n;
-  vector<int> arr(n);
+  vector<int> arr1(n), arr2(n);
 
   cout << "Using random inputs.\n";
   for (int i = 0; i < n; i++)
   {
     int a = rand() * (INT_MAX);
-    arr[i] = a;
+    arr1[i] = a;
+    arr2[i] = a;
   }
   while (choice)
   {
@@ -71,12 +72,12 @@ int main()
       break;
     case 2:
     {
-      BubbleSort(arr);
+      BubbleSort(arr1);
       break;
     }
     case 3:
     {
-      InsertionSort(arr);
+      InsertionSort(arr2);
       break;
     }
     default:
