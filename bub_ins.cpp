@@ -58,7 +58,7 @@ int main()
   cout << "Using random inputs.\n";
   for (int i = 0; i < n; i++)
   {
-    int a = rand() * (INT_MAX);
+    int a = rand() % (INT_MAX);
     arr1[i] = a;
     arr2[i] = a;
   }
